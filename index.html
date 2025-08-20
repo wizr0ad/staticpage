@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bus Tracker</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+    
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Fredoka One', cursive;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .main-container {
+      position: relative;
+      z-index: 2;
+    }
+
+    .bus-image {
+      position: absolute;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 60px;
+      background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjYwIiB2aWV3Qm94PSIwIDAgMTIwIDYwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8IS0tIFB1cnBsZSBHTElERVIgYnVzIC0tPgo8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMCwgMTApIj4KPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCIgaGVpZ2h0PSI0MCIgZmlsbD0iIzlmN2JjYiIgc3Ryb2tlPSJibGFjayIgc3Ryb2tlLXdpZHRoPSIyIiByeD0iNSIvPgo8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjIwIiBmaWxsPSJibGFjayIgcng9IjUiLz4KPHRleHQgeD0iNTAiIHk9IjE1IiBmaWxsPSJ3aGl0ZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEwIiBmb250LXdlaWdodD0iYm9sZCI+R0xJREVSPC90ZXh0Pgo8Y2lyY2xlIGN4PSIxNSIgY3k9IjM1IiByPSI4IiBmaWxsPSIjOWY3YmNiIiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjIiLz4KPGNpcmNsZSBjeD0iODUiIGN5PSIzNSIgcj0iOCIgZmlsbD0iIzlmN2JjYiIgc3Ryb2tlPSJibGFjayIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxjaXJjbGUgY3g9IjE1IiBjeT0iMzUiIHI9IjQiIGZpbGw9ImJsYWNrIi8+CjxjaXJjbGUgY3g9Ijg1IiBjeT0iMzUiIHI9IjQiIGZpbGw9ImJsYWNrIi8+CjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMjAiIGZpbGw9InJnYmEoMCwwLDAsMC4zKSIgcng9IjUiLz4KPC9nPgo8L3N2Zz4K');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0.9;
+      z-index: 3;
+      animation: driveAndFlip 6s linear infinite;
+    }
+
+    @keyframes driveAndFlip {
+      0% {
+        transform: translateX(-50%) translateX(400px) scaleX(1);
+      }
+      15% {
+        transform: translateX(-50%) translateX(0px) scaleX(1);
+      }
+      15.1% {
+        transform: translateX(-50%) translateX(0px) scaleX(-1);
+      }
+      30% {
+        transform: translateX(-50%) translateX(-400px) scaleX(-1);
+      }
+      30.1% {
+        transform: translateX(-50%) translateX(-400px) scaleX(1);
+      }
+      45% {
+        transform: translateX(-50%) translateX(0px) scaleX(1);
+      }
+      45.1% {
+        transform: translateX(-50%) translateX(0px) scaleX(-1);
+      }
+      60% {
+        transform: translateX(-50%) translateX(-400px) scaleX(-1);
+      }
+      60.1% {
+        transform: translateX(-50%) translateX(-400px) scaleX(1);
+      }
+      75% {
+        transform: translateX(-50%) translateX(0px) scaleX(1);
+      }
+      75.1% {
+        transform: translateX(-50%) translateX(0px) scaleX(-1);
+      }
+      90% {
+        transform: translateX(-50%) translateX(-400px) scaleX(-1);
+      }
+      90.1% {
+        transform: translateX(-50%) translateX(-400px) scaleX(1);
+      }
+      100% {
+        transform: translateX(-50%) translateX(400px) scaleX(1);
+      }
+    }
+
+    @keyframes waitForBus {
+      0%, 100% {
+        transform: translateX(-50%) translateX(-80px) translateY(0px);
+      }
+      50% {
+        transform: translateX(-50%) translateX(-80px) translateY(-3px);
+      }
+    }
+
+    h1 {
+      font-size: 4rem;
+      text-shadow: 3px 3px 0px rgba(0,0,0,0.3);
+      margin: 0;
+      padding: 20px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      border: 3px solid rgba(255,255,255,0.2);
+      animation: bounce 2s infinite;
+    }
+
+    .counter {
+      font-size: 6rem;
+      font-weight: bold;
+      color: #ffeb3b;
+      text-shadow: 4px 4px 0px rgba(0,0,0,0.4);
+      margin: 20px 0;
+      animation: pulse 1s infinite;
+    }
+
+    .pint-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(45deg, #ff5a5f, #ff8a80);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      padding: 15px 25px;
+      font-size: 1.2rem;
+      font-family: 'Fredoka One', cursive;
+      text-decoration: none;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+      animation: float 3s ease-in-out infinite;
+      z-index: 3;
+    }
+
+    .pint-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 20px rgba(0,0,0,0.4);
+      background: linear-gradient(45deg, #e04848, #ff6b6b);
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-10px);
+      }
+      60% {
+        transform: translateY(-5px);
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bus-image"></div>
+  <div class="bus-stop"></div>
+  <div class="stick-person"></div>
+  
+  <div class="main-container">
+    <h1>It has been</h1>
+    <div class="counter" id="counter">0</div>
+    <h1>seconds since bus was on time</h1>
+  </div>
+
+  <!-- Replace the href link with your donation/pint page -->
+  <a class="pint-button" href="https://buymeacoffee.com/wizroad" target="_blank">
+    Buy me a pint 🍺
+  </a>
+
+  <script>
+    let seconds = 0;
+    let resetInterval;
+    
+    function updateCounter() {
+      seconds++;
+      document.getElementById('counter').textContent = seconds;
+      
+      // Randomly reset to 0 (1% chance every second)
+      if (Math.random() < 0.01) {
+        seconds = 0;
+        document.getElementById('counter').textContent = seconds;
+        
+        // Add a flash effect when resetting
+        const counter = document.getElementById('counter');
+        counter.style.animation = 'none';
+        counter.offsetHeight; // Trigger reflow
+        counter.style.animation = 'pulse 0.5s ease-in-out';
+      }
+    }
+    
+    // Update counter every second
+    setInterval(updateCounter, 1000);
+  </script>
+</body>
+</html>
